@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASMARALOKA - Museum Perasaan</title>
+    
+    <!-- Google Fonts Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#FDFBF7',
+                        'ink': '#333333',
+                        'ink-light': '#555555',
+                        'gold-accent': '#C5A059',
+                        'brown-accent': '#8D6E63',
+                    },
+                    fontFamily: {
+                        'title': ['"Playfair Display"', 'serif'],
+                        'body': ['"Lora"', 'serif'],
+                        'ui': ['"Montserrat"', 'sans-serif'],
+                    },
+                    screens: {
+                        'print': {'raw': 'print'},
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for Book Feel */
+        body {
+            background-color: #FDFBF7;
+            color: #333333;
+        }
+        
+        /* Drop Cap for First Paragraph of Chapter */
+        .drop-cap::first-letter {
+            float: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.1rem;
+            color: #333333;
+            font-weight: 700;
+        }
+
+        /* Reading Progress Bar */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 100;
+        }
+        #progress-bar {
+            height: 4px;
+            background: #8D6E63;
+            width: 0%;
+        }
+
+        /* Hide scrollbar for cleaner look but keep functionality */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FDFBF7; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E0D8CF; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8D6E63; 
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print { display: none; }
+            body { background: white; }
+        }
+        
+        .chapter-separator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0;
+            color: #C5A059;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+        }
+        
+        /* Quote Block Styling */
+        .quote-block {
+            margin: 2.5rem 0;
+            padding: 1rem 2rem;
+            border-left: 3px solid #C5A059;
+            font-style: italic;
+            color: #555555;
+            background-color: rgba(197, 160, 89, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brown-accent selection:text-white">
+
+    <!-- Reading Progress Bar -->
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <!-- Navigation (Sticky) -->
+    <nav class="fixed top-0 w-full bg-paper/95 backdrop-blur-sm border-b border-gray-200 py-4 z-50 transition-all duration-300 shadow-sm no-print" id="navbar">
+        <div class="max-w-3xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="font-title font-bold text-xl tracking-widest hover:text-brown-accent transition-colors">ASMARALOKA</a>
+            <div class="hidden md:flex space-x-6 font-ui text-xs tracking-widest uppercase text-ink-light">
+                <a href="#prologue" class="hover:text-ink transition-colors">Pengantar</a>
+                <a href="#bag1" class="hover:text-ink transition-colors">I</a>
+                <a href="#bag2" class="hover:text-ink transition-colors">II</a>
+                <a href="#bag3" class="hover:text-ink transition-colors">III</a>
+                <a href="#bag4" class="hover:text-ink transition-colors">IV</a>
+                <a href="#bag5" class="hover:text-ink transition-colors">V</a>
+                <a href="#epilogue" class="hover:text-ink transition-colors">Epilog</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-ink hover:text-brown-accent">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero / Cover Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center text-center px-6 relative border-b border-gray-200">
+        <div class="max-w-4xl mx-auto animate-fade-in-up">
+            <p class="font-ui text-sm tracking-[0.3em] text-ink-light mb-6 uppercase">Sebuah Novel Digital</p>
+            <h1 class="font-title text-6xl md:text-8xl font-bold mb-4 tracking-wide text-ink">ASMARALOKA</h1>
+            <p class="font-body italic text-xl md:text-2xl text-ink-light mb-12">Museum Perasaan yang Tak Sempat Terucap</p>
+            
+            <div class="w-16 h-1 bg-brown-accent mx-auto mb-12"></div>
+            
+            <p class="font-ui text-xs tracking-widest uppercase mb-16">Ditulis oleh fafifu</p>
+            
+            <a href="#prologue" class="group inline-flex flex-col items-center gap-2 font-ui text-xs tracking-widest uppercase hover:text-brown-accent transition-colors cursor-pointer">
+                <span>Mulai Membaca</span>
+                <i class="fa-solid fa-chevron-down group-hover:translate-y-1 transition-transform"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-2xl mx-auto px-6 md:px-12 pt-24 pb-32">
+
+        <!-- Kata Pengantar -->
+        <section id="prologue" class="mb-32 scroll-mt-32">
+            <div class="text-center mb-12">
+                <h2 class="font-title text-3xl font-bold mb-2">Selamat Datang</h2>
+                <div class="font-body italic text-ink-light">di Asmaraloka</div>
+            </div>
+            
+            <article class="font-body text-lg leading-loose text-ink text-justify">
+                <p class="mb-6">Apa kabar hatimu hari ini?</p>
+                
+                <p class="mb-6">Buku ini tidak ditulis untuk mereka yang kisah cintanya sempurna seperti di negeri dongeng. Buku ini ditulis untuk kita, manusia-manusia biasa dengan perasaan yang sering kali tidak sederhana. Kita, yang berangkat kerja pagi buta dan pulang saat lampu jalan sudah menyala, sambil membawa sisa-sisa perasaan yang tak tahu harus diletakkan di mana.</p>
+                
+                <p class="mb-6">Asmaraloka adalah sebuah dunia di mana cinta tidak melulu soal "Aku sayang kamu". Di sini, cinta bisa berwujud secangkir kopi yang diseduh untuk orang lain yang tidak peka. Cinta bisa berwujud diam yang panjang di gerbong kereta. Cinta bisa berwujud keberanian untuk melepaskan, meski tangan masih ingin menggenggam.</p>
+                
+                <p class="mb-6">Cerita-cerita di dalam sini adalah potongan mozaik. Mungkin salah satunya adalah ceritamu. Mungkin salah satunya adalah cerita tentang dia yang tak pernah kamu miliki. Atau mungkin, cerita tentang dirimu sendiri yang sedang belajar mencintai bayangan di cermin.</p>
+                
+                <p class="mb-6">Duduklah yang nyaman. Seduh teh atau kopimu. Masuklah pelan-pelan. Tidak perlu terburu-buru. Di Asmaraloka, perasaanmu valid, sekecil apa pun itu.</p>
+                
+                <p class="text-right mt-12 italic text-ink-light">— fafifu</p>
+            </article>
+        </section>
+
+        <!-- Bagian Satu -->
+        <section id="bag1" class="mb-32 scroll-mt-32">
+            <div class="text-center mb-16 pt-12 border-t border-gray-100">
+                <span class="font-ui text-xs tracking-[0.2em] text-ink-light uppercase block mb-4">Bagian Satu</span>
+                <h2 class="font-title text-4xl font-normal text-ink">Ruang Tunggu Keberangkatan</h2>
+                <div class="chapter-separator">~ 🌿 ~</div>
+            </div>
+
+            <article class="font-body text-[1.15rem] leading-[1.8] text-ink text-justify">
+                <p class="mb-6 drop-cap">Stasiun Gambir sore itu memiliki aroma yang khas. Campuran antara bau besi rel yang memuai karena panas seharian, aroma kopi dari gerai waralaba, dan aroma perpisahan yang menggantung di udara.</p>
+
+                <p class="mb-6 indent-8">Langit Jakarta di luar sana mulai berwarna jingga kemerahan, seolah matahari sedang berdarah sebelum mati ditelan gedung-gedung pencakar langit. Ribuan manusia bergerak cepat, menyeret koper, memeluk kekasih, berteriak memanggil kuli angkut. Semuanya bergegas. Semuanya punya tujuan.</p>
+
+                <p class="mb-6 indent-8">Kecuali Arya.</p>
+
+                <p class="mb-6 indent-8">Lelaki berusia dua puluh tujuh tahun itu duduk mematung di bangku besi ruang tunggu. Kemeja kerja biru mudanya sudah kusut di bagian punggung, lengannya digulung asal-asalan. Di tangannya, dua lembar tiket kereta eksekutif tujuan Bandung untuk keberangkatan pukul 17.00 tergenggam erat. Begitu erat hingga ujung kertasnya basah oleh keringat dingin.</p>
+
+                <p class="mb-6 indent-8">Jam dinding raksasa di tengah aula itu berdetak tanpa perasaan. <em>Tek. Tek. Tek.</em> Jarum panjang sudah menunjuk angka sembilan. Jarum pendek di angka lima. Pukul 17.45 WIB.</p>
+
+                <p class="mb-6 indent-8">Kereta itu—Argo Parahyangan yang seharusnya membawa mereka berdua merayakan ulang tahun Arya—sudah berangkat empat puluh lima menit yang lalu. Kursi 4A dan 4B di gerbong tiga itu kini melaju kosong menembus senja, membawa harapan Arya yang menguap sia-sia.</p>
+
+                <p class="mb-6 indent-8">Ponsel Arya tergeletak di sampingnya. Layarnya gelap. Sejak pagi, ia sudah mengirimkan tiga pesan. <em>"Aku sudah jalan ke stasiun." "Aku sudah sampai. Kamu di mana?" "Keretanya mau berangkat..."</em></p>
+                
+                <p class="mb-6 indent-8">Semuanya hanya berakhir dengan dua centang abu-abu. Tidak diblokir, tidak juga dibaca. Hanya diabaikan. Dan dalam kamus hubungan manusia modern, diabaikan adalah bentuk penolakan yang paling kejam. Ia membunuhmu perlahan dalam ketidakpastian.</p>
+
+                <div class="quote-block">
+                    <p>"Masih nunggu, Mas?"</p>
+                </div>
+
+                <p class="mb-6 indent-8">Suara serak itu memecah lamunan Arya. Seorang petugas kebersihan tua, dengan seragam oranye yang warnanya mulai pudar, sedang menyapu puntung rokok di dekat kakinya. Wajah bapak itu teduh, penuh kerutan yang menyimpan ribuan cerita stasiun.</p>
+
+                <p class="mb-6 indent-8">Arya tersenyum tipis. Senyum yang dipaksakan, yang rasanya lebih perih daripada luka sayat. "Iya, Pak. Tapi sepertinya yang ditunggu nggak akan datang."</p>
+
+                <p class="mb-6 indent-8">Bapak itu menghentikan sapuannya sejenak, menatap Arya dengan tatapan iba. "Mungkin macet, Mas. Jakarta kan kalau jam segini macetnya nggak punya hati."</p>
+
+                <p class="mb-6 indent-8">Arya menggeleng pelan. "Bukan jalanan yang macet, Pak. Hatinya yang macet. Dia nggak bisa jalan ke arah saya."</p>
+                
+                <p class="mb-6 indent-8">Bapak itu mengangguk-angguk, seolah paham betul metafora itu, lalu permisi melanjutkan pekerjaannya. Meninggalkan Arya kembali sendiri di tengah keramaian.</p>
+
+                <p class="mb-6 indent-8">Arya menunduk, menatap dua tiket di tangannya lagi. Tiket ini mahal bagi Arya. Ia menyisihkan uang lembur bulan lalu demi perjalanan ini. Ia ingin membuktikan keseriusannya. Ia pikir, jika ia berusaha cukup keras, jika ia memberi cukup banyak, batu karang pun akan luluh menjadi air.</p>
+                
+                <p class="mb-6 indent-8">Tapi Arya lupa satu hukum alam Asmaraloka:</p>
+
+                <div class="quote-block">
+                    <p>"Cinta adalah kupu-kupu. Semakin kau kejar dengan jaring yang besar, semakin ia ketakutan dan terbang menjauh. Ia hanya akan hinggap di bahumu saat kau berhenti berlari dan mulai menanam bunga."</p>
+                </div>
+
+                <p class="mb-6 indent-8">Cinta yang harus dipaksa, bukanlah cinta. Itu obsesi. Itu adalah ego yang menyamar menjadi kasih sayang.</p>
+
+                <p class="mb-6 indent-8">Arya menarik napas panjang. Oksigen terasa berat masuk ke paru-parunya. Ada rasa sesak yang familiar—rasa kehilangan sebelum benar-benar memiliki.</p>
+
+                <p class="mb-6 indent-8">Perlahan, Arya bangkit berdiri. Lututnya terasa lemas. Ia berjalan gontai menuju tempat sampah stainless steel di dekat pilar besar. Tangannya gemetar saat mengangkat dua lembar tiket itu di atas lubang sampah.</p>
+
+                <p class="mb-6 indent-8">Satu detik. Dua detik. Kenangan-kenangan semu berputar di kepalanya. Janji-janji manis di WhatsApp, tawa renyah saat makan siang. <em>Lepaskan, Ya. Lepaskan,</em> batinnya berteriak.</p>
+
+                <p class="mb-6 indent-8">Jari-jarinya membuka. Kertas itu melayang jatuh, mendarat di atas tumpukan gelas plastik bekas kopi dan bungkus roti.</p>
+
+                <p class="mb-6 indent-8">Selesai. Kereta sudah pergi. Uangnya hangus. Rencananya gagal total. Tapi saat Arya membalikkan badan dan melangkah keluar dari stasiun, menembus udara Jakarta yang polutif, ia merasakan sesuatu yang aneh. Bahunya terasa lebih ringan.</p>
+                
+                <p class="mb-6 indent-8">Sore itu, Arya kehilangan uang dan kesempatan liburan. Tapi ia mendapatkan kembali harga dirinya yang sempat ia gadaikan demi memohon perhatian. Ia pulang sendirian, tapi ia pulang dengan kepala tegak.</p>
+            </article>
+        </section>
+
+        <!-- Bagian Dua -->
+        <section id="bag2" class="mb-32 scroll-mt-32">
+            <div class="text-center mb-16 pt-12 border-t border-gray-100">
+                <span class="font-ui text-xs tracking-[0.2em] text-ink-light uppercase block mb-4">Bagian Dua</span>
+                <h2 class="font-title text-4xl font-normal text-ink">Payung Hujan di Gedung Perkantoran</h2>
+                <div class="chapter-separator">~ ☔ ~</div>
+            </div>
+
+            <article class="font-body text-[1.15rem] leading-[1.8] text-ink text-justify">
+                <p class="mb-6 drop-cap">Nadin membenci hujan di jam lima sore.</p>
+                
+                <p class="mb-6 indent-8">Bagi para penyair atau penulis lagu indie, hujan sore mungkin romantis. Membawa kenangan, katanya. Tapi bagi karyawan admin seperti Nadin yang bekerja di Sudirman, hujan di jam pulang kantor adalah definisi neraka kecil. Itu artinya: Sepatu flat shoes kesayangannya akan basah dan bau, antrean lift akan mengular sampai ke lobi belakang, harga ojek online akan melonjak tiga kali lipat tak masuk akal, dan kemacetan Jakarta akan menjadi monster yang tak terurai sampai isya.</p>
+
+                <p class="mb-6 indent-8">Nadin berdiri di lobi gedung pencakar langit yang mewah itu, memeluk tas kerjanya di dada. Wajahnya lelah. Bedaknya sudah luntur dimakan minyak wajah dan AC kantor yang kering. Di depannya, tirai air turun deras sekali dari langit yang hitam pekat, seolah langit sedang menumpahkan kekesalan seharian.</p>
+
+                <p class="mb-6 indent-8">"Yah, deres banget lagi. Mana nggak bawa payung," gumam Nadin pelan, lebih kepada dirinya sendiri.</p>
+
+                <p class="mb-6 indent-8">Tiba-tiba, aroma itu tercium. Wangi yang sangat spesifik. Campuran wangi kayu cendana, sedikit musk, dan aroma hujan yang lembap. Jantung Nadin seolah berhenti berdetak satu ketukan. Ia hafal wangi ini di luar kepala.</p>
+
+                <div class="quote-block">
+                    <p>"Nadin? Belum pulang?"</p>
+                </div>
+
+                <p class="mb-6 indent-8">Suara bariton itu. Nadin menoleh kaku, berusaha menormalkan ekspresi wajahnya yang mungkin terlihat kaget berlebihan. Di sebelahnya, berdiri Rama. Senior dari divisi Marketing di lantai 12. Pria itu terlihat santai, lengan kemeja putihnya digulung sebatas siku, memperlihatkan jam tangan chronograph yang melingkar gagah.</p>
+                
+                <p class="mb-6 indent-8">"Eh... Mas Rama. Iya, Mas. Hujannya awet banget," jawab Nadin. Suaranya terdengar canggung dan bodoh.</p>
+
+                <p class="mb-6 indent-8">Rama tertawa kecil. Tawa yang renyah, yang sering Nadin dengar dari balik kubikel saat Rama bercanda dengan teman-teman satu divisinya. "Namanya juga Jakarta, Din. Cuacanya kayak suasana hati bos. Nggak ketebak."</p>
+
+                <p class="mb-6 indent-8">Rama kemudian merogoh tas ransel kulitnya dan mengeluarkan sebuah payung lipat berwarna hitam. Ia menekan tombol di gagangnya. <em>Blep.</em> Payung itu terbuka lebar dengan suara yang memuaskan.</p>
+
+                <p class="mb-6 indent-8">"Kamu mau ke halte depan kan? Yaudah, bareng aja. Payung saya gede kok. Muat berdua. Daripada nunggu reda, keburu malem. Bahaya cewek pulang malem-malem."</p>
+
+                <p class="mb-6 indent-8">Nadin terpaku. <em>Bareng? Satu payung?</em> Skenario macam apa ini? Apakah alam semesta sedang berbaik hati atau sedang ingin mempermainkan jantungnya?</p>
+
+                <p class="mb-6 indent-8">"Ayo, ngelamun aja. Keburu badai," ajak Rama lagi, kali ini sambil memberi isyarat dengan kepalanya.</p>
+                
+                <p class="mb-6 indent-8">Dengan langkah ragu-ragu—seperti Cinderella yang takut sepatunya lepas—Nadin melangkah masuk ke bawah naungan payung hitam itu.</p>
+
+                <p class="mb-6 indent-8">Jarak dari lobi ke halte Transjakarta hanyalah lima puluh meter. Jika berlari, mungkin hanya butuh tiga puluh detik. Jika berjalan kaki, paling lama dua menit. Tapi sore itu, waktu seperti melambat. Hukum fisika tidak berlaku.</p>
+
+                <p class="mb-6 indent-8">Hujan menderu-deru bising di sekeliling mereka, menghantam aspal dan atap payung dengan keras. Tapi anehnya, di bawah kubah kain hitam itu, dunia terasa hening. Nadin bisa mendengar suara napasnya sendiri. Ia bisa mendengar suara sepatu pantofel Rama mengetuk trotoar basah.</p>
+                
+                <p class="mb-6 indent-8">Bahu kiri Nadin sesekali bersentuhan dengan lengan kanan Rama saat mereka berjalan menghindari genangan air. Setiap sentuhan itu mengirimkan sengatan listrik kecil ke seluruh tubuh Nadin. Rama memiringkan payungnya sedikit lebih banyak ke arah Nadin, membiarkan bahu kanannya sendiri terkena cipratan air hujan. Sebuah gestur kecil, sederhana, tapi bagi Nadin, itu adalah puisi paling indah yang pernah dituliskan tanpa kata-kata.</p>
+
+                <p class="mb-6 indent-8">"Kerjaan lancar, Din? Saya liat admin lagi lembur terus akhir bulan ini," Rama membuka obrolan, memecah keheningan.</p>
+                <p class="mb-6 indent-8">"Lumayan, Mas. Biasalah, laporan akhir bulan. Mas Rama gimana target marketing?"</p>
+                <p class="mb-6 indent-8">"Pusing. Tapi ya dinikmatin aja. Namanya juga kuli korporat," Rama terkekeh.</p>
+
+                <p class="mb-6 indent-8">Percakapan itu sangat, sangat biasa. Tidak ada rayuan gombal. Tidak ada tatapan mata yang dalam. Hanya percakapan dua kolega yang terjebak hujan. Tapi Nadin mencintai momen ini. Nadin menyukai Rama dalam diam sejak hari pertama orientasi karyawan baru setahun lalu. Mencintai dari jarak aman. Mencintai tanpa ekspektasi, karena ia tahu di jari manis Rama melingkar cincin perak polos.</p>
+                
+                <p class="mb-6 indent-8">Nadin tahu batasan dirinya. Ia bukan tokoh antagonis yang ingin merebut kebahagiaan orang lain. Ia hanya seorang penikmat rasa dari kejauhan.</p>
+
+                <div class="quote-block">
+                    <p>"Di Asmaraloka, ada jenis cinta yang cukup dirayakan dengan 'menemani'. Tidak harus memiliki status. Tidak harus berakhir di pelaminan."</p>
+                </div>
+
+                <p class="mb-6 indent-8">Cukup berjalan bersisian sejauh lima puluh meter di bawah hujan, mencium aroma parfumnya, dan melihat sisi wajahnya dari jarak lima sentimeter. Itu sudah cukup. Sungguh, itu sudah cukup untuk menjadi bahan bakar senyum Nadin seminggu ke depan.</p>
+
+                <p class="mb-6 indent-8">Mereka sampai di halte. Atap halte yang aman menyambut mereka. Rama menutup payungnya dan mengibaskannya.</p>
+
+                <p class="mb-6 indent-8">"Nah, aman. Duluan ya, Din. Busway saya udah dateng tuh," kata Rama sambil menunjuk bus yang baru merapat. Ia melambaikan tangan, tersenyum ramah, lalu berlari kecil menaiki tangga bus.</p>
+
+                <p class="mb-6 indent-8">Nadin berdiri di sana, di tengah kerumunan orang-orang yang berebut masuk. Bajunya sedikit lembap, rambutnya agak lepek. Tapi ia tersenyum lebar sekali. Hujan sore itu tidak lagi terasa menyebalkan. Hujan sore itu adalah saksi bisu dari dua menit paling membahagiakan dalam hidupnya yang monoton.</p>
+            </article>
+        </section>
+
+        <!-- Bagian Tiga -->
+        <section id="bag3" class="mb-32 scroll-mt-32">
+            <div class="text-center mb-16 pt-12 border-t border-gray-100">
+                <span class="font-ui text-xs tracking-[0.2em] text-ink-light uppercase block mb-4">Bagian Tiga</span>
+                <h2 class="font-title text-4xl font-normal text-ink">Kotak Kardus di Sudut Kamar</h2>
+                <div class="chapter-separator">~ 📦 ~</div>
+            </div>
+
+            <article class="font-body text-[1.15rem] leading-[1.8] text-ink text-justify">
+                <p class="mb-6 drop-cap">Kamar kost Tio berukuran 3x4 meter. Cukup luas untuk bujangan, tapi malam ini terasa sesak sekali. Bukan karena barangnya banyak, tapi karena kenangan di dalamnya terlalu penuh.</p>
+
+                <p class="mb-6 indent-8">Di tengah lantai keramik putih yang dingin, tergeletak sebuah kotak kardus bekas mie instan. Kotak itu berdebu karena sudah enam bulan bersemayam di kolong tempat tidur, di pojok paling gelap yang jarang tersentuh sapu. Malam Minggu ini, sementara teman-teman kostnya pergi nongkrong atau pacaran, Tio memutuskan melakukan ritual pengusiran hantu. Hantu masa lalu.</p>
+
+                <p class="mb-6 indent-8">Dengan tangan yang sedikit ragu, Tio membuka lakban cokelat yang menyegel kotak itu. <em>Krek.</em> Suaranya nyaring di kamar yang sepi. Isi kotak itu adalah "sampah" paling berharga di dunia: barang-barang peninggalan Rara, mantan kekasihnya yang membersamainya selama tiga tahun sebelum akhirnya memilih pergi karena alasan klise: <em>"Kita sudah beda visi, Yo."</em></p>
+
+                <p class="mb-6 indent-8">Benda pertama yang Tio ambil adalah sebuah hoodie biru dongker. Bahannya tebal, merk distro lokal. Tio ingat betul, Rara meminjam jaket ini saat mereka nekat touring ke Puncak dan terjebak hujan badai di Tugu Botol. Rara kedinginan sampai bibirnya biru. Tio memakaikan jaket ini. Rara terlihat tenggelam di dalamnya, lucu sekali.</p>
+
+                <p class="mb-6 indent-8">Tio mendekatkan kain itu ke hidungnya. Sial. Wangi itu masih ada. Samar-samar, tapi hidung Tio mengenalinya dengan presisi. Wangi vanila dan stroberi. Wangi Rara.</p>
+
+                <p class="mb-6 indent-8">Seketika, sebuah film dokumenter berputar di kepala Tio. Tawa Rara saat makan mie rebus, cara Rara marah kalau Tio telat jemput, cara Rara menangis saat kucingnya mati. Dadanya sesak. Rasanya seperti ada tangan tak terlihat yang meremas jantungnya kuat-kuat.</p>
+
+                <div class="quote-block">
+                    <p>"Kenapa belum lo buang sih, Yo? Yang sayang itu barangnya, atau kenangannya?"</p>
+                </div>
+
+                <p class="mb-6 indent-8">Suara Raka, teman kost sebelah kamar, terngiang kembali. Pertanyaan itu dilontarkan Raka seminggu lalu saat melihat ujung kardus itu menyembul dari bawah kasur.</p>
+
+                <p class="mb-6 indent-8">Tio meletakkan hoodie itu ke samping. Ia mengambil benda kedua: Tiket nonton bioskop yang tintanya sudah memudar menjadi putih. Tanggalnya 14 Februari 2023. Film horor. Rara benci film horor, tapi dia nonton demi Tio. Sepanjang film dia menutup muka di lengan Tio.</p>
+
+                <p class="mb-6 indent-8">Lalu ada gantungan kunci dari Jogja. Ada photobox empat pose dengan gaya jelek yang disengaja. Tio sadar. Selama kotak ini masih ada di kamarnya, selama itu pula Rara masih "hidup" di sini. Padahal di dunia nyata, Rara sudah punya gandengan baru. Rara sudah move on. Rara sudah tertawa dengan lelucon orang lain.</p>
+
+                <p class="mb-6 indent-8">Sementara Tio? Ia masih di sini, menjadi penjaga museum masa lalu yang pengunjungnya cuma satu: dirinya sendiri. Menyedihkan. Menyimpan barang mantan itu seperti memelihara luka basah. Kau menyentuhnya setiap hari, mengelupas korengnya, berharap ia sembuh, tapi sentuhanmulah yang membuatnya terus berdarah.</p>
+
+                <p class="mb-6 indent-8">Tio menarik napas panjang, mengumpulkan sisa-sisa kewarasan. Ia mengambil kantong plastik sampah hitam besar (polybag) yang sudah ia siapkan.</p>
+
+                <p class="mb-6 indent-8">"Maaf ya," bisik Tio pada benda-benda mati itu. "Tugas kalian sudah selesai."</p>
+
+                <p class="mb-6 indent-8">Dengan gerakan cepat—sebelum hatinya berubah pikiran dan menjadi lemah lagi—Tio memasukkan hoodie itu ke dalam plastik. Lalu tiket bioskop. Lalu gantungan kunci. Lalu foto-foto itu. Semuanya masuk ke dalam perut plastik hitam. Gelap. Tak terlihat lagi.</p>
+
+                <p class="mb-6 indent-8">Tio mengikat mulut plastik itu dengan simpul mati. Erat sekali. Seerat tekadnya malam ini. Ia berdiri, menyambar plastik itu, keluar kamar, menuruni tangga kost dengan langkah lebar. Ia tidak mau berpikir lagi.</p>
+
+                <p class="mb-6 indent-8">Ia berjalan menuju tong sampah besar di depan pagar kost. Bau sampah organik menyeruak, tapi Tio tidak peduli. Ia mengayunkan tangannya.</p>
+
+                <p class="mb-6 indent-8"><em>Buk.</em></p>
+
+                <p class="mb-6 indent-8">Plastik hitam itu mendarat di tumpukan sampah lainnya. Bercampur dengan sisa makanan dan kotak susu bekas. Selesai.</p>
+                
+                <p class="mb-6 indent-8">Tio berdiri diam di depan tong sampah selama beberapa detik. Ia meraba dadanya. Aneh. Ia pikir ia akan menangis. Ia pikir ia akan menyesal. Tapi ternyata tidak. Ada rasa lega yang luar biasa mengalir dari ujung kaki sampai ujung kepala. Seperti baru saja melepaskan ransel berisi batu seberat sepuluh kilo yang digendongnya berbulan-bulan.</p>
+
+                <p class="mb-6 indent-8">Malam itu, saat Tio kembali ke kamar, ia melihat sudut kamarnya yang kini kosong melompong. Kamarnya terasa lebih luas. Udaranya terasa lebih segar. Di Asmaraloka, melepaskan bukan berarti melupakan bahwa ia pernah ada. Melepaskan berarti menyadari bahwa bab cerita itu sudah selesai titiknya. Tidak ada koma. Dan Tio harus membalik halaman ke kertas putih yang baru.</p>
+
+                <p class="mb-6 indent-8">Malam itu, Tio tidur nyenyak sekali. Tanpa mimpi. Tanpa hantu.</p>
+            </article>
+        </section>
+
+        <!-- Bagian Empat -->
+        <section id="bag4" class="mb-32 scroll-mt-32">
+            <div class="text-center mb-16 pt-12 border-t border-gray-100">
+                <span class="font-ui text-xs tracking-[0.2em] text-ink-light uppercase block mb-4">Bagian Empat</span>
+                <h2 class="font-title text-4xl font-normal text-ink">Meja Makan Tua</h2>
+                <div class="chapter-separator">~ ☕ ~</div>
+            </div>
+
+            <article class="font-body text-[1.15rem] leading-[1.8] text-ink text-justify">
+                <p class="mb-6 drop-cap">Mari kita tinggalkan sejenak drama cinta anak muda yang meledak-ledak dan penuh air mata. Mari kita bergeser ke pinggiran kota, ke sebuah rumah tua bergaya Belanda dengan cat tembok yang mulai mengelupas di sana-sini.</p>
+
+                <p class="mb-6 indent-8">Di ruang makan yang lampunya agak remang karena bohlamnya belum diganti, sepasang kakek dan nenek sedang sarapan. Kakek Darma (75 tahun) dan Nenek Wati (72 tahun). Suasana hening, hanya terdengar denting sendok beradu dengan piring keramik.</p>
+
+                <p class="mb-6 indent-8">Tangan Kakek Darma tampak gemetar saat memegang sendok. Ia menderita parkinson ringan sejak dua tahun lalu. Nasi goreng di sendoknya tumpah sedikit ke meja sebelum sampai ke mulut.</p>
+
+                <p class="mb-6 indent-8">Kakek Darma menghela napas kesal, lalu menyeruput kopinya. "Ini kopi kok pait banget sih, Bu? Gula lagi mahal apa gimana? Pelit amat sama suami sendiri," gerutunya dengan suara parau.</p>
+
+                <p class="mb-6 indent-8">Nenek Wati, yang sedang mengoleskan selai nanas ke rotinya, tidak menoleh. Wajahnya datar. "Bapak itu gula darahnya terakhir cek udah 300. Mau mati cepet? Kalau mati, kubur sendiri ya. Ibu nggak kuat gali tanah, pinggang Ibu lagi encok."</p>
+
+                <p class="mb-6 indent-8">Jawaban yang sadis. Tapi perhatikan tangan Nenek Wati. Sambil mengomel pedas, tangannya bergerak mengambil toples biskuit gandum tawar—biskuit khusus penderita diabetes. Ia membukakan tutupnya yang keras, lalu meletakkannya tepat di depan tangan suaminya yang gemetar.</p>
+
+                <p class="mb-6 indent-8">"Nih, makan gandum aja. Dicelup ke kopi. Biar nggak rewel kayak bayi," tambah Nenek Wati.</p>
+
+                <p class="mb-6 indent-8">Kakek Darma mendengus, pura-pura marah. Tapi ia mengambil biskuit itu dan mencelupkannya ke kopi hitamnya. "Iya, iya. Bawel bener perempuan tua ini."</p>
+                
+                <div class="quote-block">
+                    <p>"Inilah wajah asli Asmaraloka yang jarang dipotret kamera. Cinta di usia senja bukan lagi soal jantung yang berdebar kencang saat bertemu. Justru kalau jantung berdebar kencang di usia segini, itu tandanya harus segera dibawa ke UGD."</p>
+                </div>
+
+                <p class="mb-6 indent-8">Cinta di fase ini adalah tentang "saling menopang". Mereka sudah melewati fase bulan madu puluhan tahun lalu. Bunga mawar sudah layu. Cokelat sudah tidak boleh dimakan. Puisi-puisi cinta sudah diganti dengan daftar tagihan listrik dan jadwal kontrol dokter. Mereka juga sudah melewati fase pertengkaran hebat di usia 40-an yang nyaris membuat bercerai. Kini, di usia 70-an, mereka ada di fase simbiosis yang tak terpisahkan.</p>
+
+                <p class="mb-6 indent-8">Kakek Darma sering lupa di mana ia menaruh kacamata lima menit lalu, tapi ia ingat persis bagaimana Nenek Wati suka tehnya diseduh dengan air mendidih seratus derajat, bukan air termos dispenser. Nenek Wati sering mengeluh punggungnya sakit karena harus memijat kaki suaminya tiap malam. Tapi anehnya, ia tidak bisa tidur kalau tidak mendengar suara dengkuran suaminya di sebelahnya. Kalau Kakek Darma dirawat di rumah sakit semalam saja, Nenek Wati akan gelisah di rumah, merasa kasurnya terlalu luas dan sepi.</p>
+
+                <p class="mb-6 indent-8">Anak muda zaman sekarang mudah sekali bilang "kita tidak cocok" hanya karena beda selera musik, beda hobi, atau beda love language. Lalu mereka putus, cari yang baru. Mereka lupa, bahwa pernikahan itu adalah bengkel, bukan toko barang jadi. Kalau ada yang rusak, ya diperbaiki, dipoles, diganti olinya. Bukan dibuang mobilnya lalu beli baru.</p>
+
+                <p class="mb-6 indent-8">Di meja makan tua yang taplaknya sudah bolong sedikit bekas rokok itu, terdapat pelajaran cinta paling tinggi: Kesetiaan. Mencintai seseorang saat ia muda, gagah, kulitnya kencang, dan rambutnya hitam itu mudah. Itu naluri biologis. Semua orang bisa. Tapi tetap mencintai seseorang saat kulitnya melorot, giginya tanggal, baunya minyak angin, ingatannya payah, dan sikapnya kembali rewel seperti anak kecil... itulah cinta yang sesungguhnya. Itu adalah ibadah.</p>
+
+                <p class="mb-6 indent-8">Kakek Darma selesai makan biskuitnya. Ia menatap istrinya. "Bu, nanti sore mau jalan-jalan sore nggak? Muter komplek aja. Udah lama nggak liat matahari sore."</p>
+
+                <p class="mb-6 indent-8">Nenek Wati menatap suaminya dari balik kacamata tebalnya. Matanya melembut. "Boleh. Asal Bapak jalannya jangan cepet-cepet. Kaki saya linu kalau dipaksa ngebut."</p>
+
+                <p class="mb-6 indent-8">"Siapa yang mau ngebut? Jalan kayak kura-kura juga nggak apa-apa. Asal sama Ibu."</p>
+                <p class="mb-6 indent-8">"Halah, gombal. Inget umur."</p>
+
+                <p class="mb-6 indent-8">Keduanya terkekeh pelan. Tawa tanpa deretan gigi yang utuh, tapi manis sekali. Lebih manis dari gula yang dilarang dokter.</p>
+            </article>
+        </section>
+
+        <!-- Bagian Lima -->
+        <section id="bag5" class="mb-32 scroll-mt-32">
+            <div class="text-center mb-16 pt-12 border-t border-gray-100">
+                <span class="font-ui text-xs tracking-[0.2em] text-ink-light uppercase block mb-4">Bagian Lima</span>
+                <h2 class="font-title text-4xl font-normal text-ink">Cermin yang Retak</h2>
+                <div class="chapter-separator">~ 🪞 ~</div>
+            </div>
+
+            <article class="font-body text-[1.15rem] leading-[1.8] text-ink text-justify">
+                <p class="mb-6 drop-cap">Bab terakhir ini bukan tentang orang lain. Bab ini bukan tentang Arya, Nadin, Tio, atau Kakek Darma. Bab ini tentang Kamu.</p>
+
+                <p class="mb-6 indent-8">Ya, Kamu. Yang sedang membaca tulisan ini sambil mungkin berbaring lelah di kasur, atau mencuri waktu di sela pekerjaan. Cobalah letakkan bukumu atau ponselmu sebentar. Berdirilah di depan cermin terdekat. Kunci pintunya jika perlu. Biarkan hanya ada kamu dan bayanganmu.</p>
+
+                <p class="mb-6 indent-8">Tatap bayangan itu lamat-lamat. Lihatlah orang di dalam cermin itu. Lihat mata panda yang menghitam di bawah kelopak matanya. Itu adalah sisa begadangmu berhari-hari mengerjakan tugas, mengejar deadline, atau sekadar overthinking mengkhawatirkan masa depan yang belum terjadi.</p>
+
+                <p class="mb-6 indent-8">Lihat garis halus di ujung bibirnya. Lihat bahunya yang sedikit membungkuk. Bahu itu sudah memikul beban yang berat sekali: Ekspektasi orang tua, tuntutan pekerjaan, standar sosial tetangga, dan impianmu sendiri yang sering kali terasa mustahil.</p>
+
+                <p class="mb-6 indent-8">Pertanyaannya sederhana: Sudah berapa lama kamu mengabaikan orang di dalam cermin itu?</p>
+
+                <p class="mb-6 indent-8">Kita hidup di zaman yang aneh, Kawan. Kita sibuk sekali memuja orang lain. Kita bangun tidur langsung buka Instagram, melihat story teman yang lagi liburan ke Jepang, lalu hati kita menciut. Kita merasa hidup kita menyedihkan, miskin, dan tertinggal. Kita sibuk memikirkan perasaan pacar, takut dia marah, takut dia bosan. Kita sibuk memikirkan perasaan bos, takut dimarahi. Kita sibuk memikirkan perasaan orang tua, takut mengecewakan.</p>
+
+                <p class="mb-6 indent-8">Tapi kita lupa bertanya pada diri sendiri: <em>"Hei, diriku, apa kabar? Kamu capek ya? Maaf ya aku memaksamu lari terus tanpa istirahat."</em></p>
+
+                <p class="mb-6 indent-8">Asmaraloka tidak akan pernah utuh jika kamu masih membenci dirimu sendiri. Kamu sering merasa kurang. Kurang cantik karena kulitmu tidak seputih artis Korea. Kurang ganteng karena tidak setinggi model. Kurang kaya karena motormu masih kredit. Kurang pintar karena IPK-mu pas-pasan. Kamu membandingkan halaman 1 hidupmu yang berantakan dengan halaman 100 hidup orang lain yang sudah diedit rapi. Itu tidak adil. Itu kejam.</p>
+
+                <div class="quote-block">
+                    <p>"Satu-satunya orang yang akan menemanimu dari detik pertama kamu lahir ke dunia, menangis telanjang, sampai detik terakhir kamu menutup mata di liang lahat... adalah Dirimu Sendiri."</p>
+                </div>
+
+                <p class="mb-6 indent-8">Hanya kamu yang mendengar tangisan batinmu saat dunia sedang bising dan orang-orang tertawa. Hanya kamu yang tahu seberapa berdarah-darahnya kakimu berusaha untuk tetap berdiri hari ini. Hanya kamu yang tahu rasa sakit itu.</p>
+
+                <p class="mb-6 indent-8">Jadi, berdamailah. Kumohon, berdamailah. Peluk dirimu sendiri. Silangkan tanganmu di dada, tepuk bahumu pelan-pelan. Maafkan kesalahan-kesalahan bodoh yang pernah kamu buat di masa lalu. Kamu yang dulu berbuat salah karena kamu belum tahu apa yang kamu tahu sekarang. Itu bukan dosa, itu proses belajar.</p>
+
+                <p class="mb-6 indent-8">Katakan pada bayangan di cermin itu dengan lantang: <em>"Terima kasih sudah kuat. Terima kasih tidak menyerah dan bunuh diri saat masalah berat datang. Terima kasih sudah bertahan hidup. Aku sayang padamu, apa adanya."</em></p>
+
+                <p class="mb-6 indent-8">Cintai dirimu, rawat dirimu, hargai dirimu. Sebelum kamu meminta orang lain mencintaimu, pastikan gelas cintamu untuk diri sendiri sudah penuh. Karena gelas yang kosong tidak bisa mengisi gelas orang lain.</p>
+                
+                <p class="mb-6 indent-8">Dan ketika kamu sudah utuh, cinta yang datang bukan lagi untuk menambal lubang di hatimu, tapi untuk merayakan kebahagiaan bersamamu.</p>
+            </article>
+        </section>
+
+        <!-- Epilog -->
+        <section id="epilogue" class="mb-24 scroll-mt-32 pb-24 border-b border-gray-200">
+            <div class="text-center mb-12">
+                <h2 class="font-title text-3xl font-bold mb-2">Epilog</h2>
+                <div class="font-body italic text-ink-light">Pulang ke Diri Sendiri</div>
+            </div>
+            
+            <article class="font-body text-lg leading-loose text-ink text-justify">
+                <p class="mb-6">Perjalanan kita menyusuri lorong-lorong Asmaraloka telah usai.</p>
+                
+                <p class="mb-6">Kita telah melihat Arya yang belajar melepaskan tiket keretanya di stasiun, mengajarkan kita bahwa kadang memenangkan diri sendiri lebih penting daripada memenangkan hati orang lain.</p>
+                
+                <p class="mb-6">Kita telah merasakan debaran Nadin di bawah payung hujan, mengingatkan kita bahwa bahagia itu sederhana dan tidak melulu harus memiliki.</p>
+                
+                <p class="mb-6">Kita telah melihat Tio membuang kotak kenangannya ke tong sampah, mengajarkan kita bahwa masa depan tidak akan bisa masuk jika tangan kita masih penuh menggenggam masa lalu.</p>
+                
+                <p class="mb-6">Kita telah belajar dari Kakek Darma dan Nenek Wati di meja makan tua, bahwa cinta sejati itu teruji oleh waktu dan keriput, bukan oleh kata-kata manis.</p>
+
+                <p class="mb-6">Dan terakhir, kita telah belajar berdiri di depan cermin yang retak, memeluk diri sendiri sebelum memeluk dunia.</p>
+                
+                <p class="mb-6">Cinta, pada akhirnya, adalah sebuah perjalanan pulang. Ia bukan tentang siapa yang paling cepat sampai di pelaminan. Ia bukan perlombaan lari. Ia adalah tentang siapa yang paling menikmati perjalanannya, dengan segala luka, tawa, air mata, dan kebodohannya.</p>
+                
+                <p class="mb-6">Jika hari ini hatimu sedang patah, ingatlah bahwa patah hati adalah cara Tuhan menyelamatkanmu dari orang yang salah. Jika hari ini kamu lelah, istirahatlah, bukan berhenti. Jika hari ini kamu merasa sepi, ketahuilah bahwa sepi adalah ruang terbaik untuk mendengar suara hatimu sendiri.</p>
+
+                <p class="mb-6">Hidup ini adalah rangkaian cerita pendek yang sambung-menyambung. Ada bab sedih, ada bab bahagia. Jangan tutup bukumu hanya karena satu bab yang buruk. Teruslah membalik halaman.</p>
+                
+                <p class="mb-6 font-bold italic text-center mt-12">Sampai jumpa di persimpangan rasa berikutnya.</p>
+            </article>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-12 text-center">
+        <div class="max-w-2xl mx-auto px-6">
+            <h3 class="font-title text-2xl mb-4">ASMARALOKA</h3>
+            <p class="font-ui text-xs tracking-widest text-ink-light mb-8 uppercase">Museum Perasaan yang Tak Sempat Terucap</p>
+            
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-ink-light hover:text-brown-accent transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                <a href="#" class="text-ink-light hover:text-brown-accent transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                <a href="#" class="text-ink-light hover:text-brown-accent transition-colors"><i class="fa-brands fa-tiktok text-xl"></i></a>
+            </div>
+            
+            <p class="font-ui text-[10px] text-gray-400 uppercase tracking-widest">&copy; 2024 Ditulis oleh fafifu. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Reading Progress Bar Logic
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+            
+            // Navbar shadow on scroll
+            const nav = document.getElementById('navbar');
+            if (winScroll > 50) {
+                nav.classList.add('shadow-md');
+                nav.classList.remove('py-4');
+                nav.classList.add('py-2');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.remove('py-2');
+                nav.classList.add('py-4');
+            }
+        };
+    </script>
+</body>
+</html>
+
+
